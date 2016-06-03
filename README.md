@@ -1,2 +1,2 @@
-# LOOT---Epic-Dungeon
+# LOOT
 Arduboy dungeon crawler
