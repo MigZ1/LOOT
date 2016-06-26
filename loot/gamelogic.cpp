@@ -37,7 +37,6 @@ void Game::step()
         {
           player->init();
           world->init();
-          render->init();
         }; break;
       }
       case stateBattle: {

@@ -10,76 +10,48 @@ Render::Render(System & ab,World & world,Player & player)
   this->player = &player;
 }
 
-void Render::init()
-{
-  calculateView(player->x,player->y,player->dir);
-}
-
 inline bool Render::wallCheck(int8_t x,int8_t y)
 {
   return (world->get(x,y)==1);
 }
+inline bool Render::itemCheck(int8_t x,int8_t y)
+{
+  return false;
+}
 
 void Render::calculateView(int8_t x,int8_t y,uint8_t dir)
 {
-  //wallShow[10] = false;
-  wallShow[10] = wallCheck(x,y);
+  int8_t xs[11],ys[11];
+
+  //for gods sake man, automate this bit
   if (dir == 0)
   {
-    wallShow[0] = wallCheck(x+3,y-1);
-    wallShow[1] = wallCheck(x+3,y);
-    wallShow[2] = wallCheck(x+3,y+1);
-    wallShow[3] = wallCheck(x+2,y-1);
-    wallShow[4] = wallCheck(x+2,y);
-    wallShow[5] = wallCheck(x+2,y+1);
-    wallShow[6] = wallCheck(x+1,y-1);
-    wallShow[7] = wallCheck(x+1,y);
-    wallShow[8] = wallCheck(x+1,y+1);
-    wallShow[9] = wallCheck(x,y-1);
-    wallShow[11] = wallCheck(x,y+1);
+    xs[0]=+3; xs[1]=+3; xs[2]=+3; xs[3]=+2; xs[4]=+2; xs[5]=+2; xs[6]=+1; xs[7]=+1; xs[8]=+1; xs[9]=0; xs[10]=0; xs[11]=0;
+    ys[0]=-1; ys[1]=0;   ys[2]=+1; ys[3]=-1; ys[4]=0; ys[5]=+1; ys[6]=-1; ys[7]=0; ys[8]=+1; ys[9]=-1; ys[10]=0; ys[11]=+1;
   }
   if (dir == 1)
   {
-    wallShow[0] = wallCheck(x+1,y+3);
-    wallShow[1] = wallCheck(x,y+3);
-    wallShow[2] = wallCheck(x-1,y+3);
-    wallShow[3] = wallCheck(x+1,y+2);
-    wallShow[4] = wallCheck(x,y+2);
-    wallShow[5] = wallCheck(x-1,y+2);
-    wallShow[6] = wallCheck(x+1,y+1);
-    wallShow[7] = wallCheck(x,y+1);
-    wallShow[8] = wallCheck(x-1,y+1);
-    wallShow[9] = wallCheck(x+1,y);
-    wallShow[11] = wallCheck(x-1,y);
+    xs[0]=+1; xs[1]=0; xs[2]=0-1; xs[3]=+1; xs[4]=0; xs[5]=-1; xs[6]=+1; xs[7]=0; xs[8]=-1; xs[9]=+1; xs[10]=0; xs[11]=-1;
+    ys[0]=+3; ys[1]=+3; ys[2]=+3; ys[3]=+2; ys[4]=+2; ys[5]=+2; ys[6]=+1; ys[7]=+1; ys[8]=+1; ys[9]=0; ys[10]=0; ys[11]=0;
   }
   if (dir == 2)
   {
-    wallShow[0] = wallCheck(x-3,y+1);
-    wallShow[1] = wallCheck(x-3,y);
-    wallShow[2] = wallCheck(x-3,y-1);
-    wallShow[3] = wallCheck(x-2,y+1);
-    wallShow[4] = wallCheck(x-2,y);
-    wallShow[5] = wallCheck(x-2,y-1);
-    wallShow[6] = wallCheck(x-1,y+1);
-    wallShow[7] = wallCheck(x-1,y);
-    wallShow[8] = wallCheck(x-1,y-1);
-    wallShow[9] = wallCheck(x,y+1);
-    wallShow[11] = wallCheck(x,y-1);
+    xs[0]=-3; xs[1]=-3; xs[2]=-3; xs[3]=-2; xs[4]=-2; xs[5]=-2; xs[6]=-1; xs[7]=-1; xs[8]=-1; xs[9]=0; xs[10]=0; xs[11]=0;
+    ys[0]=+1; ys[1]=0; ys[2]=-1; ys[3]=+1; ys[4]=0; ys[5]=-1; ys[6]=+1; ys[7]=0; ys[8]=-1; ys[9]=+1; ys[10]=0; ys[11]=y-1;
   }
   if (dir == 3)
   {
-    wallShow[0] = wallCheck(x-1,y-3);
-    wallShow[1] = wallCheck(x,y-3);
-    wallShow[2] = wallCheck(x+1,y-3);
-    wallShow[3] = wallCheck(x-1,y-2);
-    wallShow[4] = wallCheck(x,y-2);
-    wallShow[5] = wallCheck(x+1,y-2);
-    wallShow[6] = wallCheck(x-1,y-1);
-    wallShow[7] = wallCheck(x,y-1);
-    wallShow[8] = wallCheck(x+1,y-1);
-    wallShow[9] = wallCheck(x-1,y);
-    wallShow[11] = wallCheck(x+1,y);
+    xs[0]=-1; xs[1]=0; xs[2]=+1; xs[3]=-1; xs[4]=0; xs[5]=+1; xs[6]=-1; xs[7]=0; xs[8]=+1; xs[9]=-1; xs[10]=0; xs[11]=+1;
+    ys[0]=-3; ys[1]=-3; ys[2]=-3; ys[3]=-2; ys[4]=-2; ys[5]=-2; ys[6]=-1; ys[7]=-1; ys[8]=-1; ys[9]=0; ys[10]=0; ys[11]=0;
   }
+
+  for(uint8_t i=0; i<=11; ++i)
+  {
+      wallShow[i] = wallCheck(x+xs[i],y+ys[i]);
+      itemShow[i] = itemCheck(x+xs[i],y+ys[i]);
+  }
+  wallshow[10] = false;
+
   if (wallShow[7])  //speed up by disabling hidden walls
   {
     wallShow[4] = false;
@@ -109,7 +81,7 @@ void Render::draw()
 
 void Render::drawView()
 {
-  int wallSize[] = { 6,10,18,32,64 };  //size in pixels of each step
+  const uint8_t wallSize[] = { 6,10,18,32,64 };  //size in pixels of each step
   char wall = 0;  //current wall
 
   int drawSize,halfSize,backSize,halfBackSize,left,leftBack,top,topBack;
@@ -126,21 +98,21 @@ void Render::drawView()
     {
       if (wallShow[wall]) //if wall exists, draw it
       {
-        if((n==0)&&(!wallShow[wall+1]))  //left wall, only draw if the middle wall is missing
+        if((n==0)&&(wallShow[wall+1]==0))  //left wall, only draw if the middle wall is missing
         {
           ab->fillRect(left+drawSize,top,(leftBack+backSize)-(left+drawSize),drawSize,0);  //blank out area behind wall
           ab->drawLine(leftBack+backSize,topBack+backSize,left+drawSize,top+drawSize,1);   //lower line
           ab->drawLine(left+drawSize,top,leftBack+backSize,topBack,1);                     //upper line
           ab->drawLine(leftBack+backSize,topBack,leftBack+backSize,topBack+backSize,1);    //far line
         }
-        if((n==2)&&(!wallShow[wall-1])) //right wall, ditto
+        if((n==2)&&(wallShow[wall-1]==0)) //right wall, ditto
         {
           ab->fillRect(leftBack,top,left-leftBack,drawSize,0);
-          ab->drawLine(leftBack,topBack,min(left,64),top,1);     //upper
-          ab->drawLine(leftBack,topBack+backSize,min(left,64),top+drawSize,1); //lower
+          ab->drawLine(leftBack,topBack,left,top,1);     //upper
+          ab->drawLine(leftBack,topBack+backSize,left,top+drawSize,1); //lower
           ab->drawLine(leftBack,topBack,leftBack,topBack+backSize,1);  //side
         }
-        if((i<3)&&(!wallShow[wall+3]))  //draw flat wall if not immediately next to the camera, and if there is no wall infront
+        if((i<3)&&(wallShow[wall+3]==0))  //draw flat wall if not immediately next to the camera, and if there is no wall infront
         {
           int wid = drawSize; //width of wall
           if ((n==2) && (left+wid > 64))  //if the wall goes off the render area, chop the width down
@@ -150,6 +122,13 @@ void Render::drawView()
           ab->fillRect(left,top,wid,drawSize,0);     //blank out wall area and draw then draw the outline
           ab->drawRect(left,top,wid+1,drawSize+1,1);
         }
+      }
+      else if(itemShow[wall])
+      {
+        int8_t itemx,itemy;
+        itemx = left+drawSize/2;  itemx -= drawSize/4;
+        itemy = (top+drawSize)-(drawSize*1/3); itemy -= drawSize/4;
+        ab->drawRect(itemx,itemy,drawSize/2,drawSize/2,1);
       }
       wall++;
       left += drawSize;     //advance left positions
