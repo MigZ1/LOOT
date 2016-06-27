@@ -11,6 +11,7 @@ class World
   public:
     uint8_t width,height;
     uint8_t level[256]; //biggest map size, 16*16, 32*8, etc
+    bool items[256];
     uint8_t itemType[16];
     uint8_t itemAction[16];
 
@@ -21,5 +22,6 @@ class World
     bool validSize(uint8_t width,uint8_t height);
     uint8_t get(int8_t x,int8_t y);
     uint8_t getFast(int8_t x,int8_t y);
+    bool getItem(int8_t x,int8_t y);
     bool inbound(int8_t x,int8_t y);
 };

@@ -18,10 +18,23 @@ void World::init()
     1,0,1,1,1,1,0,1,
     1,1,1,1,1,1,1,1
   };
+  bool itemdata[64] =
+  {
+    0,0,0,0,0,0,0,0,
+    1,0,0,0,0,0,1,0,
+    0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,
+    0,1,0,0,0,0,1,0,
+    0,0,0,0,0,0,0,0,
+  };
   for(int8_t i=0; i<64; i++)
   {
     level[i] = leveldata[i];
-  }
+    items[i] = itemdata[i];
+  };
+
 }
 
 void World::load(uint8_t *ID) //reads a map from PROGMEM and loads it into memory
@@ -67,6 +80,13 @@ uint8_t World::get(int8_t x,int8_t y)
 uint8_t World::getFast(int8_t x,int8_t y)
 {
   return level[(y*width)+x];
+}
+bool World::getItem(int8_t x,int8_t y)
+{
+  if(inbound(x,y))
+    return items[(y*width)+x];
+  else
+    return false;
 }
 
 bool World::inbound(int8_t x,int8_t y)

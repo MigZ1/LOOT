@@ -30,7 +30,6 @@ void loop() {
     return;
 
   ab.update();
-
 	ab.clear();
   game.step();
 

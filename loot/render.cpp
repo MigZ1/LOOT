@@ -16,7 +16,7 @@ inline bool Render::wallCheck(int8_t x,int8_t y)
 }
 inline bool Render::itemCheck(int8_t x,int8_t y)
 {
-  return false;
+  return (world->getItem(x,y));
 }
 
 void Render::calculateView(int8_t x,int8_t y,uint8_t dir)
@@ -50,7 +50,7 @@ void Render::calculateView(int8_t x,int8_t y,uint8_t dir)
       wallShow[i] = wallCheck(x+xs[i],y+ys[i]);
       itemShow[i] = itemCheck(x+xs[i],y+ys[i]);
   }
-  wallshow[10] = false;
+  wallShow[10] = false;
 
   if (wallShow[7])  //speed up by disabling hidden walls
   {
