@@ -21,7 +21,7 @@ inline bool Render::itemCheck(int8_t x,int8_t y)
 
 void Render::calculateView(int8_t x,int8_t y,uint8_t dir)
 {
-  int8_t xs[11],ys[11];
+  int8_t xs[12],ys[12];
 
   //for gods sake man, automate this bit
   if (dir == 0)
@@ -37,7 +37,7 @@ void Render::calculateView(int8_t x,int8_t y,uint8_t dir)
   if (dir == 2)
   {
     xs[0]=-3; xs[1]=-3; xs[2]=-3; xs[3]=-2; xs[4]=-2; xs[5]=-2; xs[6]=-1; xs[7]=-1; xs[8]=-1; xs[9]=0; xs[10]=0; xs[11]=0;
-    ys[0]=+1; ys[1]=0; ys[2]=-1; ys[3]=+1; ys[4]=0; ys[5]=-1; ys[6]=+1; ys[7]=0; ys[8]=-1; ys[9]=+1; ys[10]=0; ys[11]=y-1;
+    ys[0]=+1; ys[1]=0; ys[2]=-1; ys[3]=+1; ys[4]=0; ys[5]=-1; ys[6]=+1; ys[7]=0; ys[8]=-1; ys[9]=+1; ys[10]=0; ys[11]=-1;
   }
   if (dir == 3)
   {
@@ -45,12 +45,12 @@ void Render::calculateView(int8_t x,int8_t y,uint8_t dir)
     ys[0]=-3; ys[1]=-3; ys[2]=-3; ys[3]=-2; ys[4]=-2; ys[5]=-2; ys[6]=-1; ys[7]=-1; ys[8]=-1; ys[9]=0; ys[10]=0; ys[11]=0;
   }
 
-  for(uint8_t i=0; i<=11; ++i)
+  for(uint8_t i=0; i<=12; ++i)
   {
       wallShow[i] = wallCheck(x+xs[i],y+ys[i]);
       itemShow[i] = itemCheck(x+xs[i],y+ys[i]);
   }
-  wallShow[10] = false;
+  wallShow[10] = false; //position player is standing on
 
   if (wallShow[7])  //speed up by disabling hidden walls
   {
@@ -85,7 +85,7 @@ void Render::drawView()
   char wall = 0;  //current wall
 
   int drawSize,halfSize,backSize,halfBackSize,left,leftBack,top,topBack;
-  for(char i=0; i<4; ++i) //distance
+  for(char i=0; i<4; i++) //distance
   {
     drawSize = wallSize[i+1]; halfSize = drawSize/2;      //size of walls on screen
     backSize = wallSize[i];   halfBackSize = backSize/2;  //size of the backside of the walls, for depth
@@ -94,7 +94,7 @@ void Render::drawView()
     topBack  = 32-halfBackSize;         //y position of the walls on screen
     top      = 32-halfSize;
 
-    for(char n=0; n<3; ++n) //left->right
+    for(char n=0; n<3; n++) //left->right
     {
       if (wallShow[wall]) //if wall exists, draw it
       {
