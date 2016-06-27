@@ -21,9 +21,7 @@ inline bool Render::itemCheck(int8_t x,int8_t y)
 
 void Render::calculateView(int8_t x,int8_t y,uint8_t dir)
 {
-  int8_t xs[12],ys[12];
-
-  //for gods sake man, automate this bit
+    /*
   if (dir == 0)
   {
     xs[0]=+3; xs[1]=+3; xs[2]=+3; xs[3]=+2; xs[4]=+2; xs[5]=+2; xs[6]=+1; xs[7]=+1; xs[8]=+1; xs[9]=0; xs[10]=0; xs[11]=0;
@@ -44,12 +42,27 @@ void Render::calculateView(int8_t x,int8_t y,uint8_t dir)
     xs[0]=-1; xs[1]=0; xs[2]=+1; xs[3]=-1; xs[4]=0; xs[5]=+1; xs[6]=-1; xs[7]=0; xs[8]=+1; xs[9]=-1; xs[10]=0; xs[11]=+1;
     ys[0]=-3; ys[1]=-3; ys[2]=-3; ys[3]=-2; ys[4]=-2; ys[5]=-2; ys[6]=-1; ys[7]=-1; ys[8]=-1; ys[9]=0; ys[10]=0; ys[11]=0;
   }
+  */
 
+  static const int8_t arrA[12] = { 3, 3, 3, 2, 2, 2, 1, 1, 1, 0, 0, 0 };
+  static const int8_t arrB[12] = { -1, 0, +1, -1, 0, +1, -1, 0, +1, -1, 0, +1 };
+
+  int8_t xs, ys;  
   for(uint8_t i=0; i<12; ++i)
   {
-      wallShow[i] = wallCheck(x+xs[i],y+ys[i]);
-      itemShow[i] = itemCheck(x+xs[i],y+ys[i]);
+    switch(dir)
+    {
+      case 0: xs = arrA[i]; ys = arrB[i]; break;
+      case 1: xs = -arrB[i]; ys = arrA[i]; break;
+      case 2: xs = -arrA[i]; ys = -arrB[i]; break;
+      case 3: xs = arrB[i]; ys = -arrA[i]; break;
+    }
+
+
+    wallShow[i] = wallCheck(x + xs, y + ys);
+    itemShow[i] = itemCheck(x + xs, y + ys);
   }
+
 
   wallShow[10] = false; //position player is standing on
 
