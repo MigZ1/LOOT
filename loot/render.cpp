@@ -2,24 +2,25 @@
 #include "render.h"
 #include "world.h"
 #include "player.h"
+#include "direction.h"
 
-Render::Render(System & ab,World & world,Player & player)
+Render::Render(System & ab,World & world, Player & player)
 {
   this->ab = &ab;
   this->world = &world;
   this->player = &player;
 }
 
-inline bool Render::wallCheck(int8_t x,int8_t y)
+inline bool Render::wallCheck(int8_t x, int8_t y)
 {
-  return (world->get(x,y)==1);
+  return (world->get(x, y)==1);
 }
-inline bool Render::itemCheck(int8_t x,int8_t y)
+inline bool Render::itemCheck(int8_t x, int8_t y)
 {
-  return (world->getItem(x,y));
+  return (world->getItem(x, y));
 }
 
-void Render::calculateView(int8_t x,int8_t y,uint8_t dir)
+void Render::calculateView(int8_t x, int8_t y, Direction dir)
 {
     /*
   if (dir == 0)
@@ -48,16 +49,15 @@ void Render::calculateView(int8_t x,int8_t y,uint8_t dir)
   static const int8_t arrB[12] = { -1, 0, +1, -1, 0, +1, -1, 0, +1, -1, 0, +1 };
 
   int8_t xs, ys;  
-  for(uint8_t i=0; i<12; ++i)
+  for(uint8_t i = 0; i < 12; ++i)
   {
     switch(dir)
     {
-      case 0: xs = arrA[i]; ys = arrB[i]; break;
-      case 1: xs = -arrB[i]; ys = arrA[i]; break;
-      case 2: xs = -arrA[i]; ys = -arrB[i]; break;
-      case 3: xs = arrB[i]; ys = -arrA[i]; break;
+      case Direction::East: xs = arrA[i]; ys = arrB[i]; break;
+      case Direction::South: xs = -arrB[i]; ys = arrA[i]; break;
+      case Direction::West: xs = -arrA[i]; ys = -arrB[i]; break;
+      case Direction::North: xs = arrB[i]; ys = -arrA[i]; break;
     }
-
 
     wallShow[i] = wallCheck(x + xs, y + ys);
     itemShow[i] = itemCheck(x + xs, y + ys);
