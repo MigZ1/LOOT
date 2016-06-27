@@ -3,6 +3,7 @@
 #include "system.h"
 #include "world.h"
 #include "player.h"
+#include "direction.h"
 
 class Render
 {
@@ -23,7 +24,7 @@ class Render
 
     bool wallCheck(int8_t x,int8_t y);
     bool itemCheck(int8_t x,int8_t y);
-    void calculateView(int8_t x,int8_t y,uint8_t dir);
+    void calculateView(int8_t x,int8_t y,Direction dir);
     void drawView();
     void drawMap();
     void drawStats();
