@@ -7,7 +7,7 @@ enum class Direction : uint8_t
   South = 1,
   West = 2,
   North = 3
-}
+};
 
 Direction rotateRight(Direction dir)
 {
