@@ -138,7 +138,7 @@ void Render::drawView()
       leftBack += backSize;
     }
   }
-  ab-fillRect(64,0,16,64);  //hide any leaky drawing
+  ab->fillRect(64,0,16,64,0);  //hide any leaky drawing
   ab->drawRect(0,0,64,64,1);
 }
 
