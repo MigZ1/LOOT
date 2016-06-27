@@ -9,12 +9,12 @@ enum class Direction : uint8_t
   North = 3
 };
 
-Direction rotateRight(Direction dir)
+inline Direction rotateRight(Direction dir)
 {
   return static_cast<Direction>((static_cast<uint8_t>(dir) + 1) % 4);
 }
 
-Direction rotateLeft(Direction dir)
+inline Direction rotateLeft(Direction dir)
 {
   return static_cast<Direction>((static_cast<uint8_t>(dir) - 1) % 4);
 }
