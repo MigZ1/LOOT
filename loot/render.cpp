@@ -45,11 +45,12 @@ void Render::calculateView(int8_t x,int8_t y,uint8_t dir)
     ys[0]=-3; ys[1]=-3; ys[2]=-3; ys[3]=-2; ys[4]=-2; ys[5]=-2; ys[6]=-1; ys[7]=-1; ys[8]=-1; ys[9]=0; ys[10]=0; ys[11]=0;
   }
 
-  for(uint8_t i=0; i<=12; ++i)
+  for(uint8_t i=0; i<12; ++i)
   {
       wallShow[i] = wallCheck(x+xs[i],y+ys[i]);
       itemShow[i] = itemCheck(x+xs[i],y+ys[i]);
   }
+
   wallShow[10] = false; //position player is standing on
 
   if (wallShow[7])  //speed up by disabling hidden walls
@@ -125,16 +126,19 @@ void Render::drawView()
       }
       else if(itemShow[wall])
       {
-        int8_t itemx,itemy;
-        itemx = left+drawSize/2;  itemx -= drawSize/4;
-        itemy = (top+drawSize)-(drawSize*1/3); itemy -= drawSize/4;
-        ab->drawRect(itemx,itemy,drawSize/2,drawSize/2,1);
+        int8_t itemx = left+drawSize/2;  itemx -= drawSize/4;
+        if(itemx<64)
+        {
+          int8_t itemy = (top+drawSize)-(drawSize*1/3); itemy -= drawSize/4;
+          ab->drawRect(itemx,itemy,drawSize/2,drawSize/2,1);
+        }
       }
       wall++;
       left += drawSize;     //advance left positions
       leftBack += backSize;
     }
   }
+  ab-fillRect(64,0,16,64);  //hide any leaky drawing
   ab->drawRect(0,0,64,64,1);
 }
 
