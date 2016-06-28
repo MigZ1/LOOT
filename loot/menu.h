@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
-#include "system.h"
+
+class System;
 
 class Menu
 {
