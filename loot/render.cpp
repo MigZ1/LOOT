@@ -169,26 +169,33 @@ void Render::drawView()
 void Render::drawMap()
 {
   //draw map grid
-  const uint8_t dx = 63;  //x offset, puts on right side of the screen
+  const uint8_t offsetx = 63;  //x offset, puts on right side of the screen
   for(int iy=0; iy<8; ++iy) //loops x&y, draws a rectangle for every wall
   {
     for(int ix=0; ix<8; ++ix)
     {
       if (world->get(ix,iy))
       {
-        ab->drawRect(dx+(ix*8),(iy*8),9,9,1);
+        ab->drawRect(offsetx+(ix*8),(iy*8),9,9,1);
       }
     }
   }
-  //draws the player as a cross
-  char cx = (player->x)+1;
-  char cy = (player->y)+1;
-  ab->drawLine(dx+(((cx)*8)-6),(cy*8)-6,dx+((cx*8)-2),(cy*8)-2,1);
-  ab->drawLine(dx+(((cx)*8)-6),(cy*8)-2,dx+((cx*8)-2),(cy*8)-6,1);
+  //draws the player as an arrow
+  char dx = offsetx+((player->x)*8);
+  char dy = ((player->y)*8);
+  //ab->drawLine(playerx+2,playery+2,playerx+6,playery+6,1);
+  //ab->drawLine(playerx+2,playery+6,playerx+6,playery+2,1)
+  switch(player->dir)
+  {
+    case Direction::East: { ab->drawLine(dx+2,dy+2,dx+6,dy+4,1);  ab->drawLine(dx+2,dy+6,dx+6,dy+4,1); }; break;            // >
+    case Direction::South:{ ab->drawLine(dx+2,dy+2,dx+4,dy+6,1);  ab->drawLine(dx+6,dy+2,dx+4,dy+6,1); }; break;      // V
+    case Direction::West: { ab->drawLine(dx+6,dy+2,dx+2,dy+4,1);  ab->drawLine(dx+6,dy+6,dx+2,dy+4,1); } break;      // <
+    case Direction::North:{ ab->drawLine(dx+2,dy+6,dx+4,dy+2,1);  ab->drawLine(dx+6,dy+6,dx+4,dy+4,1);  } break;      // ^
+  }
 
   //outlines the map
-  ab->drawLine(dx+64,0,dx+64,63,1);
-  ab->drawLine(dx,63,dx+64,63,1);
+  ab->drawLine(offsetx+64,0,offsetx+64,63,1);
+  ab->drawLine(offsetx,63,offsetx+64,63,1);
 }
 
 void Render::drawStats()
