@@ -1,10 +1,11 @@
 #pragma once
 #include <stdint.h>
-#include "menu.h"
-#include "render.h"
-#include "player.h"
-#include "world.h"
-#include "constants.h"
+
+class System;
+class Render;
+class Menu;
+class World;
+class Player;
 
 class Game
 {
@@ -16,7 +17,7 @@ class Game
     Player * player;
 
   public:
-    Game(System & ab,Render & render,Menu & menu,Player & player,World & world);
+    Game(System & ab, Render & render, Menu & menu, Player & player, World & world);
 
     void step();
     void draw();
