@@ -60,6 +60,15 @@ void Game::step()
       render->step();
       render->draw();
 
+      ab->setCursor(4,4);
+      switch(player->dir)
+      {
+        case Direction::East:  ab->print("EAST"); break;
+        case Direction::South: ab->print("SOUTH"); break;
+        case Direction::West:  ab->print("WEST"); break;
+        case Direction::North: ab->print("NORTH"); break;
+      }
+      
       if(ab->pushed(BTN_A))
         ab->setState(stateBattle);
     };break;

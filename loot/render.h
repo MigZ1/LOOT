@@ -5,6 +5,9 @@
 #include "player.h"
 #include "direction.h"
 
+class Player;
+enum class Direction : uint8_t;
+
 class Render
 {
   private:

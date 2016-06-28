@@ -153,6 +153,17 @@ void Render::drawView()
   }
   ab->fillRect(64,0,16,64,0);  //hide any leaky drawing
   ab->drawRect(0,0,64,64,1);
+
+  ab->setCursor(4,4);
+  switch(player->dir)
+  {
+    case Direction::East:  ab->print("EAST"); break;
+    case Direction::South: ab->print("SOUTH"); break;
+    case Direction::West:  ab->print("WEST"); break;
+    case Direction::North: ab->print("NORTH"); break;
+    default: ab->print("Wat");
+  }
+  printf(" Direction: %u", player->dir);
 }
 
 void Render::drawMap()

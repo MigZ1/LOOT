@@ -11,7 +11,7 @@ class World
   public:
     uint8_t width,height;
     uint8_t level[256]; //biggest map size, 16*16, 32*8, etc
-    bool items[256];
+    uint8_t items[256];
     uint8_t itemType[16];
     uint8_t itemAction[16];
 
