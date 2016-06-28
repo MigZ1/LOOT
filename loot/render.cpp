@@ -22,7 +22,7 @@ inline bool Render::itemCheck(int8_t x, int8_t y)
 
 void Render::calculateView(int8_t x, int8_t y, Direction dir)
 {
-    /*
+  /*
   if (dir == 0)
   {
     xs[0]=+3; xs[1]=+3; xs[2]=+3; xs[3]=+2; xs[4]=+2; xs[5]=+2; xs[6]=+1; xs[7]=+1; xs[8]=+1; xs[9]=0; xs[10]=0; xs[11]=0;
@@ -48,7 +48,7 @@ void Render::calculateView(int8_t x, int8_t y, Direction dir)
   static const int8_t arrA[12] = { 3, 3, 3, 2, 2, 2, 1, 1, 1, 0, 0, 0 };
   static const int8_t arrB[12] = { -1, 0, +1, -1, 0, +1, -1, 0, +1, -1, 0, +1 };
 
-  int8_t xs, ys;  
+  int8_t xs, ys;
   for(uint8_t i = 0; i < 12; ++i)
   {
     switch(dir)
