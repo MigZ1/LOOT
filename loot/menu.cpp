@@ -55,34 +55,37 @@ void Menu::step()
 }
 void Menu::draw()
 {
-  if(page==0) //main screen
+  switch(page)
   {
-    //logo
-    if (logoAnim>0)
-      ab->drawBitmap(8,5-(64-logoAnim), imgTitle, 112, 54, 1);
-    //menu text
-    ab->setCursor(16,logoAnim+8);
-    ab->print(F("Play"));
-    ab->setCursor(16,logoAnim+16);
-    ab->print(F("Config"));
-    ab->setCursor(16,logoAnim+24);
-    ab->print(F("About"));
-    //select cursor
-    ab->setCursor(8,logoAnim+8+(8*select));
-    ab->print(F(">"));
-  }
-  if(page==1) //Slots
-  {
+    case 0:
+    {
+      //logo
+      if (logoAnim>0)
+        ab->drawBitmap(8,5-(64-logoAnim), imgTitle, 112, 54, 1);
+      //menu text
+      ab->setCursor(16,logoAnim+8);
+      ab->print(F("Play"));
+      ab->setCursor(16,logoAnim+16);
+      ab->print(F("Config"));
+      ab->setCursor(16,logoAnim+24);
+      ab->print(F("About"));
+      //select cursor
+      ab->setCursor(8,logoAnim+8+(8*select));
+      ab->print(F(">"));
+    };break;
+    case 1: //Slots
+    {
 
-  }
-  if(page==2) //options
-  {
-    ab->setCursor(0,0);
-    ab->print(F("Nothing to see here!"));
-  }
-  if(page==3) //About
-  {
-    ab->setCursor(0,0);
-    ab->print(F("Test string!"));
-  }
+    };break;
+    case 2: //options
+    {
+      ab->setCursor(0,0);
+      ab->print(F("Nothing to see here!"));
+    };
+    case 3: //About
+    {
+      ab->setCursor(0,0);
+      ab->print(F("Test string!"));
+    }; break;
+  };
 }

@@ -23,7 +23,7 @@ struct System {
     nowInput  = 0x00;
     prevInput = 0xff;
 
-    lastState = stateNull;
+    lastFrameState = stateNull;
     state = stateMenu;  //begin on the menu
   }
 
@@ -71,9 +71,10 @@ struct System {
   int cpuLoad()    { return arduboy.cpuLoad(); }    //why is this an int?
 
   //putting state in here so everything can set it
-  int8_t getState() { return state; }
-  int8_t getLastState() { return lastState; }
-  void setState(int8_t newstate) { state = newstate; }
+  uint8_t getState() { return state; }
+  uint8_t getLastState() { return lastState; }
+  uint8_t getLastFrameState() { return lastFrameState; }
+  void setState(int8_t newstate) { lastState = state; state = newstate; }
   bool stateChanged()  { return (state != lastState);  }
   void stateEndChange()    {  lastState = state;   }
 
@@ -81,5 +82,5 @@ struct System {
   Arduboy arduboy;
   byte    nowInput;
   byte    prevInput;
-  int8_t  lastState,state;
+  uint8_t  lastState,lastFrameState,state;
 };

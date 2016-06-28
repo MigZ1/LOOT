@@ -1,5 +1,6 @@
 #include "gamelogic.h"
 #include "constants.h"
+#include "direction.h"
 
 Game::Game(System & ab,Render & render,Menu & menu,Player & player,World & world)
 {
@@ -37,7 +38,6 @@ void Game::step()
         {
           player->init();
           world->init();
-          render->init();
         }; break;
       }
       case stateBattle: {
@@ -60,6 +60,15 @@ void Game::step()
       render->step();
       render->draw();
 
+      ab->setCursor(4,4);
+      switch(player->dir)
+      {
+        case Direction::East:  ab->print("EAST"); break;
+        case Direction::South: ab->print("SOUTH"); break;
+        case Direction::West:  ab->print("WEST"); break;
+        case Direction::North: ab->print("NORTH"); break;
+      }
+      
       if(ab->pushed(BTN_A))
         ab->setState(stateBattle);
     };break;
@@ -80,25 +89,22 @@ void Game::step()
 
 void Game::playerStep() //Here just for testing reasons, will be relocated soon
 {
-  int8_t dir,lastDir;
+  Direction dir,lastDir;
   dir = player->dir;
   lastDir = player->dir;
 
   if(ab->pushed(BTN_L))
-    --dir;
+    dir = rotateLeft(dir);
+    
   if(ab->pushed(BTN_R))
-    ++dir;
+    dir = rotateRight(dir);
 
-  if(dir != lastDir)
-  {
-    if (dir<0)  dir = 3;
-    if (dir>3)  dir = 0;
-    player->moved = true;
-  }
+  player->moved = (dir != lastDir);
   player->dir = dir;
 
   if(ab->pushed(BTN_U)) //move 1 step in the looking direction
-    player->move(dir,1);
+    player->move(dir, 1);
+    
   if(ab->pushed(BTN_D))
-    player->move(dir,-1);
+    player->move(dir, -1);
 }
