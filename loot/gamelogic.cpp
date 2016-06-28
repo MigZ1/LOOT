@@ -1,4 +1,9 @@
 #include "gamelogic.h"
+#include "system.h"
+#include "render.h"
+#include "menu.h"
+#include "player.h"
+#include "world.h"
 #include "constants.h"
 #include "direction.h"
 
