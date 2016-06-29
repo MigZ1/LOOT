@@ -22,7 +22,7 @@ inline bool Render::itemCheck(int8_t x, int8_t y)
 
 void Render::calculateView(int8_t x, int8_t y, Direction dir)
 {
-    /*
+  /*
   if (dir == 0)
   {
     xs[0]=+3; xs[1]=+3; xs[2]=+3; xs[3]=+2; xs[4]=+2; xs[5]=+2; xs[6]=+1; xs[7]=+1; xs[8]=+1; xs[9]=0; xs[10]=0; xs[11]=0;
@@ -48,7 +48,7 @@ void Render::calculateView(int8_t x, int8_t y, Direction dir)
   static const int8_t arrA[12] = { 3, 3, 3, 2, 2, 2, 1, 1, 1, 0, 0, 0 };
   static const int8_t arrB[12] = { -1, 0, +1, -1, 0, +1, -1, 0, +1, -1, 0, +1 };
 
-  int8_t xs, ys;  
+  int8_t xs, ys;
   for(uint8_t i = 0; i < 12; ++i)
   {
     switch(dir)
@@ -169,26 +169,33 @@ void Render::drawView()
 void Render::drawMap()
 {
   //draw map grid
-  const uint8_t dx = 63;  //x offset, puts on right side of the screen
+  const uint8_t offsetx = 63;  //x offset, puts on right side of the screen
   for(int iy=0; iy<8; ++iy) //loops x&y, draws a rectangle for every wall
   {
     for(int ix=0; ix<8; ++ix)
     {
       if (world->get(ix,iy))
       {
-        ab->drawRect(dx+(ix*8),(iy*8),9,9,1);
+        ab->drawRect(offsetx+(ix*8),(iy*8),9,9,1);
       }
     }
   }
-  //draws the player as a cross
-  char cx = (player->x)+1;
-  char cy = (player->y)+1;
-  ab->drawLine(dx+(((cx)*8)-6),(cy*8)-6,dx+((cx*8)-2),(cy*8)-2,1);
-  ab->drawLine(dx+(((cx)*8)-6),(cy*8)-2,dx+((cx*8)-2),(cy*8)-6,1);
+  //draws the player as an arrow
+  char dx = offsetx+((player->x)*8);
+  char dy = ((player->y)*8);
+  //ab->drawLine(playerx+2,playery+2,playerx+6,playery+6,1);
+  //ab->drawLine(playerx+2,playery+6,playerx+6,playery+2,1)
+  switch(player->dir)
+  {
+    case Direction::East: { ab->drawLine(dx+2,dy+2,dx+6,dy+4,1);  ab->drawLine(dx+2,dy+6,dx+6,dy+4,1); }; break;            // >
+    case Direction::South:{ ab->drawLine(dx+2,dy+2,dx+4,dy+6,1);  ab->drawLine(dx+6,dy+2,dx+4,dy+6,1); }; break;      // V
+    case Direction::West: { ab->drawLine(dx+6,dy+2,dx+2,dy+4,1);  ab->drawLine(dx+6,dy+6,dx+2,dy+4,1); } break;      // <
+    case Direction::North:{ ab->drawLine(dx+2,dy+6,dx+4,dy+2,1);  ab->drawLine(dx+6,dy+6,dx+4,dy+4,1);  } break;      // ^
+  }
 
   //outlines the map
-  ab->drawLine(dx+64,0,dx+64,63,1);
-  ab->drawLine(dx,63,dx+64,63,1);
+  ab->drawLine(offsetx+64,0,offsetx+64,63,1);
+  ab->drawLine(offsetx,63,offsetx+64,63,1);
 }
 
 void Render::drawStats()

@@ -81,7 +81,7 @@ void Menu::draw()
     {
       ab->setCursor(0,0);
       ab->print(F("Nothing to see here!"));
-    };
+    }; break;
     case 3: //About
     {
       ab->setCursor(0,0);

@@ -28,22 +28,12 @@ void Player::move(Direction dir, int8_t dist)
     case Direction::West: nx = -1; break;
     case Direction::North: ny = -1; break;
   }
-
   if(dist != 1)
   {
     nx *= dist; //multiply by distance
     ny *= dist;
   }
-  /*
-  bool hit = (world->get(x+nx,y+ny)==1);
-  if(!hit)
-  {
-    x = x+nx;
-    y = y+ny;
-    moved = true;
-  }
-  */
-  jump(x + nx, y + ny);  //reduce duplicated code
+  jump(x + nx, y + ny);
 }
 
 void Player::jump(uint8_t x,uint8_t y)

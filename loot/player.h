@@ -1,8 +1,9 @@
 #pragma once
 #include <stdint.h>
-#include "world.h"
-#include "system.h"
 #include "direction.h"
+
+class System;
+class World;
 
 class Player
 {

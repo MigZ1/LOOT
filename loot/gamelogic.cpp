@@ -1,4 +1,9 @@
 #include "gamelogic.h"
+#include "system.h"
+#include "render.h"
+#include "menu.h"
+#include "player.h"
+#include "world.h"
 #include "constants.h"
 #include "direction.h"
 
@@ -60,15 +65,6 @@ void Game::step()
       render->step();
       render->draw();
 
-      ab->setCursor(4,4);
-      switch(player->dir)
-      {
-        case Direction::East:  ab->print("EAST"); break;
-        case Direction::South: ab->print("SOUTH"); break;
-        case Direction::West:  ab->print("WEST"); break;
-        case Direction::North: ab->print("NORTH"); break;
-      }
-      
       if(ab->pushed(BTN_A))
         ab->setState(stateBattle);
     };break;
@@ -95,7 +91,7 @@ void Game::playerStep() //Here just for testing reasons, will be relocated soon
 
   if(ab->pushed(BTN_L))
     dir = rotateLeft(dir);
-    
+
   if(ab->pushed(BTN_R))
     dir = rotateRight(dir);
 
@@ -104,7 +100,7 @@ void Game::playerStep() //Here just for testing reasons, will be relocated soon
 
   if(ab->pushed(BTN_U)) //move 1 step in the looking direction
     player->move(dir, 1);
-    
+
   if(ab->pushed(BTN_D))
     player->move(dir, -1);
 }

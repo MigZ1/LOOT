@@ -1,4 +1,5 @@
 #pragma once
+#include <avr/pgmspace.h>
 
 const unsigned char imgTitle[] PROGMEM =
 {
