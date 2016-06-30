@@ -89,18 +89,18 @@ void Game::playerStep() //Here just for testing reasons, will be relocated soon
   dir = player->dir;
   lastDir = player->dir;
 
-  if(ab->pushed(BTN_L))
+  if(ab->isPushed(BTN_L))
     dir = rotateLeft(dir);
 
-  if(ab->pushed(BTN_R))
+  if(ab->isPushed(BTN_R))
     dir = rotateRight(dir);
 
   player->moved = (dir != lastDir);
   player->dir = dir;
 
-  if(ab->pushed(BTN_U)) //move 1 step in the looking direction
+  if(ab->isPushed(BTN_U)) //move 1 step in the looking direction
     player->move(dir, 1);
 
-  if(ab->pushed(BTN_D))
+  if(ab->isPushed(BTN_D))
     player->move(dir, -1);
 }
