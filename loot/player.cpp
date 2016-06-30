@@ -18,7 +18,7 @@ void Player::init()
   sp = 10;
 }
 
-void changeDirection(const Direction direction)
+void Player::changeDirection(const Direction direction)
 {
   Direction lastDir = this->dir;
   this->dir = direction;
