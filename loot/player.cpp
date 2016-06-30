@@ -3,7 +3,7 @@
 #include "system.h"
 #include "direction.h"
 
-Player::Player(System & ab,World & world)
+Player::Player(System & ab, World & world)
 {
   this->ab = &ab;
   this->world = &world;
@@ -18,25 +18,20 @@ void Player::init()
   sp = 10;
 }
 
-void Player::move(Direction dir, int8_t dist)
+void Player::move(const int8_t distance)
 {
-  int8_t nx=0, ny = 0;  //calculate direction
-  switch(dir)
+  int8_t nx, ny;  //calculate direction
+  switch(this->dir)
   {
     case Direction::East: nx = 1; break;
     case Direction::South: ny = 1; break;
     case Direction::West: nx = -1; break;
     case Direction::North: ny = -1; break;
   }
-  if(dist != 1)
-  {
-    nx *= dist; //multiply by distance
-    ny *= dist;
-  }
-  jump(x + nx, y + ny);
+  this->jump(this->x + (nx * distance), this->y + (ny * distance));
 }
 
-void Player::jump(uint8_t x,uint8_t y)
+void Player::jump(const uint8_t x, const uint8_t y)
 {
   if (world->get(x, y)==0)
   {
