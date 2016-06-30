@@ -1,6 +1,3 @@
-/*
-
-*/
 #include <stdint.h>
 #include <Arduboy.h>
 #include "system.h"
@@ -13,25 +10,25 @@
 #include "player.h"
 #include "menu.h"
 
-void setup() {
+void setup()
+{
 	ab.begin();
-
 	ab.fillScreen(0);
 	ab.drawBitmap(8, 5, imgTitle, 112, 54, 1);
 	ab.display();
-	while(!ab.pushed(BTN_A))	//keep titlescreen up until a button is pressed
+	while(!ab.isPushed(BTN_A))	//keep titlescreen up until a button is pressed
 	{
 		ab.update();
 	}
 }
 
-void loop() {
+void loop()
+{
   if(!ab.nextFrame())
     return;
 
   ab.update();
-	ab.clear();
+  ab.clear();
   game.step();
-
-	ab.display();
+  ab.display();
 }
