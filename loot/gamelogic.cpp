@@ -7,7 +7,7 @@
 #include "constants.h"
 #include "direction.h"
 
-Game::Game(System & ab,Render & render,Menu & menu,Player & player,World & world)
+Game::Game(System & ab, Render & render,Menu & menu,Player & player,World & world)
 {
   this->ab = &ab;
   this->menu = &menu;
@@ -85,9 +85,7 @@ void Game::step()
 
 void Game::playerStep() //Here just for testing reasons, will be relocated soon
 {
-  Direction dir,lastDir;
-  dir = player->dir;
-  lastDir = player->dir;
+  Direction dir = player->dir;
 
   if(ab->isPushed(BTN_L))
     dir = rotateLeft(dir);
@@ -95,12 +93,11 @@ void Game::playerStep() //Here just for testing reasons, will be relocated soon
   if(ab->isPushed(BTN_R))
     dir = rotateRight(dir);
 
-  player->moved = (dir != lastDir);
-  player->dir = dir;
+  player->changeDirection(dir);
 
   if(ab->isPushed(BTN_U)) //move 1 step in the looking direction
-    player->move(dir, 1);
+    player->move(1);
 
   if(ab->isPushed(BTN_D))
-    player->move(dir, -1);
+    player->move(-1);
 }
