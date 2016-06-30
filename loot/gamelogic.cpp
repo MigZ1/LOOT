@@ -65,7 +65,7 @@ void Game::step()
       render->step();
       render->draw();
 
-      if(ab->pushed(BTN_A))
+      if(ab->isPushed(BTN_A))
         ab->setState(stateBattle);
     };break;
     case stateBattle:
