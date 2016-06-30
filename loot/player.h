@@ -21,7 +21,7 @@ class Player
     char name[8];
 
     void init();
+    void move(const int8_t distance);
+    void jump(const uint8_t x, const uint8_t y);
     void step();
-    void move(Direction,int8_t);
-    void jump(uint8_t,uint8_t);
 };
