@@ -18,6 +18,13 @@ void Player::init()
   sp = 10;
 }
 
+void changeDirection(const Direction direction)
+{
+  Direction lastDir = this->dir;
+  this->dir = direction;
+  this->moved = (this->dir != lastDir);
+}
+
 void Player::move(const int8_t distance)
 {
   int8_t nx, ny;  //calculate direction
