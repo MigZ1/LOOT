@@ -76,7 +76,7 @@ void Game::step()
       ab->print(F("Battle"));
       ab->setCursor(66,10);
       ab->print(F("goes here!"));
-      if(ab->pushed(BTN_A))
+      if(ab->isPushed(BTN_A))
         ab->setState(stateGame);
     };break;
 
