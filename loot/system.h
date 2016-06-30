@@ -53,19 +53,19 @@ class System : public Arduboy
 
   bool isPressed(const uint8_t button) const
   {
-     return ((this->nowInput & this->button) != 0);
+     return ((this->nowInput & button) != 0);
   }
   
   bool isPushed(const uint8_t button) const
   {
     // If pressed this frame, but not last frame
-    return ((this->nowInput & this->button) != 0) && ((this->prevInput & this->button) == 0);
+    return ((this->nowInput & button) != 0) && ((this->prevInput & button) == 0);
   }
   
   bool isReleased(const uint8_t button) const
   {
     // If released in the last frame
-    return ((this->prevInput & this->button) != 0) && ((this->nowInput & this->button) == 0);
+    return ((this->prevInput & button) != 0) && ((this->nowInput & button) == 0);
   }
   
   uint8_t getState(void) const
