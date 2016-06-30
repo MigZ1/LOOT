@@ -21,7 +21,7 @@ void Menu::step()
 
   if(logoAnim==0) //if menu is ready
   {
-    if(ab->pushed(BTN_A))
+    if(ab->isPushed(BTN_A))
     {
       switch(page)
       {
@@ -41,11 +41,11 @@ void Menu::step()
         }; break;
       }
     }
-    if(ab->pushed(BTN_U))
+    if(ab->isPushed(BTN_U))
     {
       --select;
     }
-    if(ab->pushed(BTN_D))
+    if(ab->isPushed(BTN_D))
     {
       ++select;
     }
