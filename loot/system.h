@@ -1,86 +1,96 @@
-//Copied from i40000
-//todo : replace with custom version
-
 #pragma once
 
+#include "core/core.h"
 #include "arduboy.h"
 #include "constants.h"
 
 #define SCREEN_WIDTH  (WIDTH)
 #define SCREEN_HEIGHT (HEIGHT)
 
-#define BTN_U (B00000001)
-#define BTN_D (B00000010)
-#define BTN_L (B00000100)
-#define BTN_R (B00001000)
-#define BTN_A (B00010000)
-#define BTN_B (B00100000)
+// IMPORTANT: These change value depending whether you're compiling for Arduboy 10 or the Devkit.
+// Please remember to define ARDUBOY_10 or AB_DEVKIT in your ino file.
+#define BTN_U (UP_BUTTON)
+#define BTN_D (DOWN_BUTTON)
+#define BTN_L (LEFT_BUTTON)
+#define BTN_R (RIGHT_BUTTON)
+#define BTN_A (A_BUTTON)
+#define BTN_B (B_BUTTON)
 
-struct System {
-  void begin() {
-    arduboy.begin();
-    arduboy.setFrameRate(30);
-    nowInput  = 0x00;
-    prevInput = 0xff;
-
-    lastFrameState = stateNull;
-    state = stateMenu;  //begin on the menu
-  }
-
-  void update() {
-    //input
-    prevInput = nowInput;
-    nowInput  = 0;
-
-    //test to see if this can be replaced with a call to Arduboy(Core?).buttonState()
-    if(arduboy.pressed(UP_BUTTON)) { nowInput |= BTN_U; }
-    if(arduboy.pressed(DOWN_BUTTON)) { nowInput |= BTN_D; }
-    if(arduboy.pressed(LEFT_BUTTON)) { nowInput |= BTN_L; }
-    if(arduboy.pressed(RIGHT_BUTTON)) { nowInput |= BTN_R; }
-    if(arduboy.pressed(A_BUTTON)) { nowInput |= BTN_A; }
-    if(arduboy.pressed(B_BUTTON)) { nowInput |= BTN_B; }
-  }
-
-  bool pressed(byte button) const {
-     return (nowInput & button) != 0;
-  }
-  bool pushed(byte button) const {
-    return (nowInput & button) != 0 && (prevInput & button) == 0; //If pressed this frame, but not last frame
-  }
-  bool released(byte button) const {
-    return (prevInput & button) != 0 && (nowInput & button) == 0; //if released in the last frame
-  }
-
-  //I'm 99% sure there's an automatic way of doing this.
-  bool nextFrame() { return arduboy.nextFrame(); }
-  void clear() { arduboy.clear(); }
-  void display() { arduboy.display(); }
-  int frameCount() { return arduboy.frameCount; }
-  bool everyXFrames(uint8_t frames) { return arduboy.everyXFrames(frames); }
-  void drawPixel(uint8_t x, uint8_t y,byte c) { arduboy.drawPixel(x,y,c); }
-  void drawBitmap(int8_t x,int8_t y,const byte* bitmap, uint8_t w,uint8_t h,byte c) {
-    arduboy.drawBitmap(x, y, bitmap, w,h, c);
-  }
-  void drawLine(int8_t x,int8_t y,int8_t x2,int8_t y2,byte c)  { arduboy.drawLine(x,y,x2,y2,c);  }
-  void fillRect(int8_t x, int8_t y, uint8_t w, uint8_t h, byte c) { arduboy.fillRect(x, y, w, h, c); }
-  void drawRect(int8_t x, int8_t y, uint8_t w, uint8_t h, byte c) { arduboy.drawRect(x, y, w, h, c); }
-  void setCursor(uint8_t x, uint8_t y) { arduboy.setCursor(x, y); }
-  void print(const char* text) { arduboy.print(text); }
-  void print(const __FlashStringHelper *string) { arduboy.print(string);  }  //for F("string") stuff
-  void fillScreen(uint8_t col) { arduboy.fillScreen(col); }
-  int cpuLoad()    { return arduboy.cpuLoad(); }    //why is this an int?
-
-  //putting state in here so everything can set it
-  uint8_t getState() { return state; }
-  uint8_t getLastState() { return lastState; }
-  uint8_t getLastFrameState() { return lastFrameState; }
-  void setState(int8_t newstate) { lastState = state; state = newstate; }
-  bool stateChanged()  { return (state != lastState);  }
-  void stateEndChange()    {  lastState = state;   }
-
+class System : public Arduboy
+{
   private:
-  Arduboy arduboy;
-  byte    nowInput;
-  byte    prevInput;
-  uint8_t  lastState,lastFrameState,state;
+  uint8_t nowInput, prevInput, lastState, state;
+  
+  public:
+  // Explicitly calling parent's default constructor for the sake of clarity.
+  // Arduboy's constructor would be called even if the exlicit call were removed.
+  System(void) : Arduboy()
+  {
+    this->lastState = stateNull;
+    this->state = stateMenu;  //begin on the menu
+    this->nowInput  = 0x00;
+    this->prevInput = 0xff;
+    this->setFrameRate(30); // I checked, it's safe to do this
+  }
+
+  void update()
+  {
+    //input
+    this->prevInput = this->nowInput;
+    this->nowInput  = this->buttonsState();
+
+    // Remapping the button byte every frame is a big waste of time, just use the native bit arrangement
+    // Not to mention every one of these function calls was reading from 3 input pins each time, just to arrive
+    // at the same result each time. That's 6 times the necessary number of instructions.
+    
+    // if(arduboy.pressed(UP_BUTTON)) { nowInput |= BTN_U; }
+    // if(arduboy.pressed(DOWN_BUTTON)) { nowInput |= BTN_D; }
+    // if(arduboy.pressed(LEFT_BUTTON)) { nowInput |= BTN_L; }
+    // if(arduboy.pressed(RIGHT_BUTTON)) { nowInput |= BTN_R; }
+    // if(arduboy.pressed(A_BUTTON)) { nowInput |= BTN_A; }
+    // if(arduboy.pressed(B_BUTTON)) { nowInput |= BTN_B; }
+  }
+
+  bool isPressed(const uint8_t button) const
+  {
+     return ((this->nowInput & button) != 0);
+  }
+  
+  bool isPushed(const uint8_t button) const
+  {
+    // If pressed this frame, but not last frame
+    return ((this->nowInput & button) != 0) && ((this->prevInput & button) == 0);
+  }
+  
+  bool isReleased(const uint8_t button) const
+  {
+    // If released in the last frame
+    return ((this->prevInput & button) != 0) && ((this->nowInput & button) == 0);
+  }
+  
+  uint8_t getState(void) const
+  {
+    return this->state;
+  }
+  
+  uint8_t getLastState(void) const
+  {
+    return this->lastState;
+  }
+  
+  bool stateChanged(void) const 
+  {
+    return (this->state != this->lastState);
+  }
+  
+  void setState(const uint8_t newstate)
+  {
+    this->lastState = this->state;
+    this->state = newstate;
+  }
+  
+  void stateEndChange(void)
+  {
+    this->lastState = this->state;
+  }
 };
