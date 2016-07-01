@@ -40,7 +40,7 @@ void Player::move(const int8_t distance)
 
 void Player::jump(const uint8_t x, const uint8_t y)
 {
-  if (world->get(x, y)==0)
+  if (world->get(x, y) == 0)
   {
     this->x = x;
     this->y = y;
