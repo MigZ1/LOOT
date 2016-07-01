@@ -9,7 +9,7 @@ Player::Player(System & ab, World & world)
   this->world = &world;
 }
 
-void Player::init()
+void Player::init(void)
 {
   moved = true;
   x = 1;
@@ -48,7 +48,7 @@ void Player::jump(const uint8_t x, const uint8_t y)
   }
 }
 
-void Player::step()
+void Player::step(void)
 {
   //currently in gamelogic.cpp because reasons
 }
