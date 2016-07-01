@@ -1,4 +1,4 @@
-#include "gamelogic.h"
+#include "game.h"
 #include "system.h"
 #include "render.h"
 #include "menu.h"
