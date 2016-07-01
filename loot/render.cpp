@@ -185,28 +185,28 @@ void Render::drawMap(void)
     
     switch(player->dir)
     {
-      case Direction::East: // >
+      case Direction::East:
       {
         /*x1 += 0;*/ /*y1 += 0;*/
         /*x2 += 0;*/ y2 += 4;
         x3 += 4; y3 += 2;
         break;
       }
-      case Direction::South: // \/
+      case Direction::South:
       {
         /*x1 += 0;*/ /*y1 += 0;*/
         x2 += 4; /*y2 += 0;*/
         x3 += 2; y3 += 4;
         break;
       }
-      case Direction::West: // <
+      case Direction::West:
       {
         x1 += 4; /*y1 += 0;*/
         /*x2 += 0;*/ y2 += 2;
         x3 += 4; y3 += 4;
         break;
       }
-      case Direction::North: // /\
+      case Direction::North:
       {
         /*x1 += 0;*/ y1 += 4;
         x2 += 2; /*y2 += 0;*/
