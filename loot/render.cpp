@@ -78,19 +78,19 @@ void Render::calculateView(int8_t x, int8_t y, Direction dir)
   }
 }
 
-void Render::step()
+void Render::step(void)
 {
   if(player->getMoved())
     calculateView(player->x,player->y,player->getDirection());
 }
 
-void Render::draw()
+void Render::draw(void)
 {
   drawView();
   drawMap();
 }
 
-void Render::drawView()
+void Render::drawView(void)
 {
   const uint8_t wallSize[] = { 6,10,18,32,64 };  //size in pixels of each step
   char wall = 0;  //current wall
@@ -163,7 +163,7 @@ void Render::drawView()
   printf(" Direction: %u", player->getDirection());
 }
 
-void Render::drawMap()
+void Render::drawMap(void)
 {
   //draw map grid
   const uint8_t offsetx = 63;  //x offset, puts on right side of the screen
@@ -195,7 +195,7 @@ void Render::drawMap()
   ab->drawLine(offsetx,63,offsetx+64,63,1);
 }
 
-void Render::drawStats()
+void Render::drawStats(void)
 {
   ab->setCursor(66,2);
   ab->print(F("HP : "));
