@@ -54,34 +54,34 @@ void World::load(uint8_t *ID) //reads a map from PROGMEM and loads it into memor
   */
 }
 
-bool World::validSize(uint8_t width,uint8_t height)  //will our world fit in RAM? Probably unneeded if the maps are precomputed
+bool World::validSize(const uint8_t width, const uint8_t height)  //will our world fit in RAM? Probably unneeded if the maps are precomputed
 {
   return (width*height <= 256);
 }
 
-void World::set(int8_t x,int8_t y,uint8_t wall)
+void World::set(const int8_t x, const int8_t y, const uint8_t wall)
 {
   if(inbound(x,y))
     level[(y*width)+x] = wall;
 }
 
-void World::setFast(int8_t x,int8_t y,uint8_t wall)
+void World::setFast(const int8_t x, const int8_t y, const uint8_t wall)
 {
   level[(y*width)+x] = wall;
 }
 
-uint8_t World::get(int8_t x,int8_t y)
+uint8_t World::get(const int8_t x, const int8_t y)
 {
   if(inbound(x,y))
     return level[(y*width)+x];
   else
     return 1;  //outside the map is a sea of walls
 }
-uint8_t World::getFast(int8_t x,int8_t y)
+uint8_t World::getFast(const int8_t x, const int8_t y)
 {
   return level[(y*width)+x];
 }
-bool World::getItem(int8_t x,int8_t y)
+bool World::getItem(const int8_t x, const int8_t y)
 {
   if(inbound(x,y))
     return items[(y*width)+x];
@@ -89,7 +89,7 @@ bool World::getItem(int8_t x,int8_t y)
     return false;
 }
 
-bool World::inbound(int8_t x,int8_t y)
+bool World::inbound(const int8_t x, const int8_t y)
 {
   return((x>=0)&&(y>=0)&&(x<width)&&(y<height));
 }
