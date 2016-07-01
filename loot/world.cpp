@@ -1,7 +1,7 @@
 #include "world.h"
 #include <stdint.h>
 
-void World::init()
+void World::init(void)
 {
   width = 8;
   height = 8;
