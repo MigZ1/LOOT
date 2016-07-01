@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include "system.h"
 #include "graphics.h"
-#include "gamelogic.h"
+#include "game.h"
 #include "constants.h"
 #include "render.h"
 #include "world.h"
