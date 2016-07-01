@@ -8,14 +8,14 @@ Menu::Menu(System & ab)
   this->ab = &ab;
 }
 
-void Menu::init()
+void Menu::init(void)
 {
   select = 0;
   page = 0;
   logoAnim = 64;
 }
 
-void Menu::step()
+void Menu::step(void)
 {
   logoAnim = max(logoAnim--,0);
 
@@ -53,7 +53,7 @@ void Menu::step()
     select = min(max(select,0),2); //seriously, no clamp()?
   }
 }
-void Menu::draw()
+void Menu::draw(void)
 {
   switch(page)
   {
