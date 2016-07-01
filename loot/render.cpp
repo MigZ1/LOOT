@@ -80,8 +80,11 @@ void Render::calculateView(const int8_t x, const int8_t y, const Direction dir)
 
 void Render::step(void)
 {
-  if(player->getMoved())
-    calculateView(player->x,player->y,player->getDirection());
+  if(player->moved) //only recalculate on movement
+-  {
+-    calculateView(player->x,player->y,player->dir);
+-    player->moved = false;
+-  }
 }
 
 void Render::draw(void)
@@ -152,7 +155,7 @@ void Render::drawView(void)
   ab->drawRect(0,0,64,64,1);
 
   ab->setCursor(4,4);
-  switch(player->getDirection())
+  switch(player->dir)
   {
     case Direction::East:  ab->print("EAST"); break;
     case Direction::South: ab->print("SOUTH"); break;
@@ -160,7 +163,7 @@ void Render::drawView(void)
     case Direction::North: ab->print("NORTH"); break;
     default: ab->print("Wat");
   }
-  printf(" Direction: %u", player->getDirection());
+  printf(" Direction: %u", player->dir);
 }
 
 void Render::drawMap(void)
@@ -182,7 +185,7 @@ void Render::drawMap(void)
   char dy = ((player->y)*8);
   //ab->drawLine(playerx+2,playery+2,playerx+6,playery+6,1);
   //ab->drawLine(playerx+2,playery+6,playerx+6,playery+2,1)
-  switch(player->getDirection())
+  switch(player->dir)
   {
     case Direction::East: { ab->drawLine(dx+2,dy+2,dx+6,dy+4,1);  ab->drawLine(dx+2,dy+6,dx+6,dy+4,1); }; break;            // >
     case Direction::South:{ ab->drawLine(dx+2,dy+2,dx+4,dy+6,1);  ab->drawLine(dx+6,dy+2,dx+4,dy+6,1); }; break;      // V
