@@ -30,7 +30,7 @@ void Game::load(bool slot)
 
 }
 
-void Game::step()
+void Game::step(void)
 {
   if (ab->stateChanged())
   {
@@ -83,7 +83,7 @@ void Game::step()
   };
 }
 
-void Game::playerStep() //Here just for testing reasons, will be relocated soon
+void Game::playerStep(void) //Here just for testing reasons, will be relocated soon
 {
   Direction dir = player->getDirection();
 
