@@ -70,17 +70,17 @@ void Menu::draw(void)
     case 0:
     {
       //logo
-      if (logoAnim>0)
-        ab->drawBitmap(8,5-(64-logoAnim), imgTitle, 112, 54, 1);
+      if (logoAnim > 0)
+        ab->drawBitmap(8, 5 - (64 - logoAnim), imgTitle, 112, 54, 1);
       //menu text
-      ab->setCursor(16,logoAnim+8);
+      ab->setCursor(16, logoAnim + 8);
       ab->print(F("Play"));
-      ab->setCursor(16,logoAnim+16);
+      ab->setCursor(16, logoAnim + 16);
       ab->print(F("Config"));
-      ab->setCursor(16,logoAnim+24);
+      ab->setCursor(16, logoAnim + 24);
       ab->print(F("About"));
       //select cursor
-      ab->setCursor(8,logoAnim+8+(8*select));
+      ab->setCursor(8, logoAnim + 8 + (8 * select));
       ab->print(F(">"));
       break;
     }
@@ -89,13 +89,13 @@ void Menu::draw(void)
     }
     case 2: //options
     {
-      ab->setCursor(0,0);
+      ab->setCursor(0, 0);
       ab->print(F("Nothing to see here!"));
       break;
     }
     case 3: //About
     {
-      ab->setCursor(0,0);
+      ab->setCursor(0, 0);
       ab->print(F("Test string!"));
       break;
     }
