@@ -2,7 +2,7 @@
 #include <Arduboy.h>
 #include "system.h"
 #include "globals.h"
-#include "gameLogic.h"
+#include "game.h"
 #include "graphics.h"
 #include "constants.h"
 #include "render.h"
