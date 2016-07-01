@@ -85,7 +85,7 @@ void Game::step(void)
 
 void Game::playerStep(void) //Here just for testing reasons, will be relocated soon
 {
-  Direction dir = player->getDirection();
+  Direction dir = player->dir;
 
   if(ab->isPushed(BTN_L))
     dir = rotateLeft(dir);
