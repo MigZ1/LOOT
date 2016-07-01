@@ -11,16 +11,16 @@ Render::Render(System & ab,World & world, Player & player)
   this->player = &player;
 }
 
-inline bool Render::wallCheck(int8_t x, int8_t y)
+inline bool Render::wallCheck(const int8_t x, const  int8_t y)
 {
   return (world->get(x, y)==1);
 }
-inline bool Render::itemCheck(int8_t x, int8_t y)
+inline bool Render::itemCheck(const int8_t x, const int8_t y)
 {
   return (world->getItem(x, y));
 }
 
-void Render::calculateView(int8_t x, int8_t y, Direction dir)
+void Render::calculateView(const int8_t x, const int8_t y, const Direction dir)
 {
   /*
   if (dir == 0)
