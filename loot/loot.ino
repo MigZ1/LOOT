@@ -2,7 +2,7 @@
 #include <Arduboy.h>
 #include "system.h"
 #include "globals.h"
-#include "gameLogic.h"
+#include "game.h"
 #include "graphics.h"
 #include "constants.h"
 #include "render.h"
@@ -10,7 +10,7 @@
 #include "player.h"
 #include "menu.h"
 
-void setup()
+void setup(void)
 {
 	ab.begin();
 	ab.fillScreen(0);
@@ -22,13 +22,13 @@ void setup()
 	}
 }
 
-void loop()
+void loop(void)
 {
-  if(!ab.nextFrame())
-    return;
-
-  ab.update();
-  ab.clear();
-  game.step();
-  ab.display();
+	if(!ab.nextFrame())
+		return;
+		
+	ab.update();
+	ab.clear();
+	game.step();
+	ab.display();
 }

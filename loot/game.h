@@ -19,10 +19,9 @@ class Game
   public:
     Game(System & ab, Render & render, Menu & menu, Player & player, World & world);
 
-    void step();
-    void draw();
-    void load(bool slot);
-    void save(bool slot);
-
-    void playerStep();
+    void step(void);
+    void draw(void);
+    void load(const bool slot);
+    void save(const bool slot);
+    void playerStep(void);
 };
