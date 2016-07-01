@@ -23,9 +23,9 @@ class Render
     void step(void);
     void draw(void);
 
-    bool wallCheck(int8_t x,int8_t y);
-    bool itemCheck(int8_t x,int8_t y);
-    void calculateView(int8_t x,int8_t y,Direction dir);
+    bool wallCheck(const int8_t x, const int8_t y);
+    bool itemCheck(const int8_t x, const int8_t y);
+    void calculateView(const int8_t x, const int8_t y, const Direction dir);
     void drawView(void);
     void drawMap(void);
     void drawStats(void);
