@@ -20,13 +20,13 @@ class Render
 
     Render(System & ab,World & world,Player & player);
 
-    void step();
-    void draw();
+    void step(void);
+    void draw(void);
 
     bool wallCheck(int8_t x,int8_t y);
     bool itemCheck(int8_t x,int8_t y);
     void calculateView(int8_t x,int8_t y,Direction dir);
-    void drawView();
-    void drawMap();
-    void drawStats();
+    void drawView(void);
+    void drawMap(void);
+    void drawStats(void);
 };
