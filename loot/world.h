@@ -15,7 +15,7 @@ class World
     uint8_t itemType[16];
     uint8_t itemAction[16];
 
-    void init();
+    void init(void);
     void load(uint8_t *ID);
     void set(int8_t x,int8_t y,uint8_t wall);
     void setFast(int8_t x,int8_t y,uint8_t wall);
