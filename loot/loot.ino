@@ -10,7 +10,7 @@
 #include "player.h"
 #include "menu.h"
 
-void setup()
+void setup(void)
 {
 	ab.begin();
 	ab.fillScreen(0);
@@ -22,7 +22,7 @@ void setup()
 	}
 }
 
-void loop()
+void loop(void)
 {
   if(!ab.nextFrame())
     return;
