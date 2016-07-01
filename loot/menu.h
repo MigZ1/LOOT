@@ -12,7 +12,7 @@ class Menu
   public:
     Menu(System & ab);
 
-    void init();
-    void step();
-    void draw();
+    void init(void);
+    void step(void);
+    void draw(void);
 };
