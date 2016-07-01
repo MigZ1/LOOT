@@ -24,11 +24,11 @@ void setup(void)
 
 void loop(void)
 {
-  if(!ab.nextFrame())
-    return;
-
-  ab.update();
-  ab.clear();
-  game.step();
-  ab.display();
+	if(!ab.nextFrame())
+		return;
+		
+	ab.update();
+	ab.clear();
+	game.step();
+	ab.display();
 }
