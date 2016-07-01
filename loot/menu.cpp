@@ -17,9 +17,9 @@ void Menu::init(void)
 
 void Menu::step(void)
 {
-  logoAnim = max(logoAnim--,0);
+  logoAnim = max(logoAnim - 1, 0);
 
-  if(logoAnim==0) //if menu is ready
+  if(logoAnim == 0) //if menu is ready
   {
     if(ab->isPushed(BTN_A))
     {
@@ -27,32 +27,42 @@ void Menu::step(void)
       {
         case 0:
         {
-          if(select==0) { ab->setState(stateGame);  };  //todo: link to a new/load game screen
-          if(select==1) { page = 2;};
-          if(select==2) { page = 3; select = 2; };
-        }; break;
+          switch(select)
+          {
+          case 0: { ab->setState(stateGame); break; }
+          case 1: { page = 2; break; }
+          case 2: { page = 3; select = 2; break; }
+          }
+          break;
+        }
         case 2:
         {
-          page = 0; select = 1;
-        }; break;
+          page = 0;
+          select = 1;
+          break;
+        }
         case 3:
         {
           page = 0;
-        }; break;
+          break;
+        }
       }
     }
+    
     if(ab->isPushed(BTN_U))
     {
       --select;
     }
+    
     if(ab->isPushed(BTN_D))
     {
       ++select;
     }
 
-    select = min(max(select,0),2); //seriously, no clamp()?
+    select = min(max(select, 0), 2); //seriously, no clamp()?
   }
 }
+
 void Menu::draw(void)
 {
   switch(page)
@@ -72,20 +82,22 @@ void Menu::draw(void)
       //select cursor
       ab->setCursor(8,logoAnim+8+(8*select));
       ab->print(F(">"));
-    };break;
+      break;
+    }
     case 1: //Slots
     {
-
-    };break;
+    }
     case 2: //options
     {
       ab->setCursor(0,0);
       ab->print(F("Nothing to see here!"));
-    }; break;
+      break;
+    }
     case 3: //About
     {
       ab->setCursor(0,0);
       ab->print(F("Test string!"));
-    }; break;
-  };
+      break;
+    }
+  }
 }
