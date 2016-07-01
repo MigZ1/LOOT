@@ -81,10 +81,10 @@ void Render::calculateView(const int8_t x, const int8_t y, const Direction dir)
 void Render::step(void)
 {
   if(player->moved) //only recalculate on movement
--  {
--    calculateView(player->x, player->y, player->dir);
--    player->moved = false;
--  }
+   {
+     calculateView(player->x, player->y, player->dir);
+     player->moved = false;
+   }
 }
 
 void Render::draw(void)
@@ -174,23 +174,12 @@ void Render::drawMap(void)
     for(int ix = 0, jx = 0; ix < 8; ++ix, jx += 8)
       if (world->get(ix, iy))
         ab->drawRect(offsetx + jx, jy, 9, 9, 1);
-        
-  //ab->drawLine(playerx+2,playery+2,playerx+6,playery+6,1);
-  //ab->drawLine(playerx+2,playery+6,playerx+6,playery+2,1)
-  
-  /*
-  switch(player->dir)
-  {
-    case Direction::East: { ab->drawLine(dx+2,dy+2,dx+6,dy+4,1);  ab->drawLine(dx+2,dy+6,dx+6,dy+4,1); }; break;            // >
-    case Direction::South:{ ab->drawLine(dx+2,dy+2,dx+4,dy+6,1);  ab->drawLine(dx+6,dy+2,dx+4,dy+6,1); }; break;      // V
-    case Direction::West: { ab->drawLine(dx+6,dy+2,dx+2,dy+4,1);  ab->drawLine(dx+6,dy+6,dx+2,dy+4,1); } break;      // <
-    case Direction::North:{ ab->drawLine(dx+2,dy+6,dx+4,dy+2,1);  ab->drawLine(dx+6,dy+6,dx+4,dy+4,1);  } break;      // ^
-  }
-  */
   
   { // Explicit scoping in the hopes the compiler will ditch these 6 variables asap
     // x3 and y3 refer to the point of the arrow. Only 6 coords are needed for 3 points
-    uint8_t x1 = offsetx + (player->x * 8), y1 = (player->y * 8);
+    // By adding 2 to x and y up here, 10 addition operations can be eliminated
+    uint8_t x1 = offsetx + (player->x * 8) + 2;
+    uint8_t y1 = (player->y * 8) + 2;
     uint8_t x2 = x1, y2 = y1;
     uint8_t x3 = x1, y3 = y1;
     
@@ -198,30 +187,30 @@ void Render::drawMap(void)
     {
       case Direction::East: // >
       {
-        x1 += 2; y1 += 2;
-        x2 += 2; y2 += 6;
-        x3 += 6; y3 += 4;
+        /*x1 += 0;*/ /*y1 += 0;*/
+        /*x2 += 0;*/ y2 += 4;
+        x3 += 4; y3 += 2;
         break;
       }
       case Direction::South: // \/
       {
-        x1 += 2; y1 += 2;
-        x2 += 6; y2 += 2;
-        x3 += 4; y3 += 6;
+        /*x1 += 0;*/ /*y1 += 0;*/
+        x2 += 4; /*y2 += 0;*/
+        x3 += 2; y3 += 4;
         break;
       }
       case Direction::West: // <
       {
-        x1 += 6; y1 += 2;
-        x2 += 2; y2 += 4;
-        x3 += 6; y3 += 6;
+        x1 += 4; /*y1 += 0;*/
+        /*x2 += 0;*/ y2 += 2;
+        x3 += 4; y3 += 4;
         break;
       }
       case Direction::North: // /\
       {
-        x1 += 2; y1 += 6;
-        x2 += 4; y2 += 2;
-        x3 += 6; y3 += 6;
+        /*x1 += 0;*/ y1 += 4;
+        x2 += 2; /*y2 += 0;*/
+        x3 += 4; y3 += 4;
         break;
       }
     }
