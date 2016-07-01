@@ -21,11 +21,11 @@ Same difference:
 Game::Game(Menu & menu) : menu(&menu) {}
 */
 
-void Game::save(bool slot)
+void Game::save(const bool slot)
 {
 
 }
-void Game::load(bool slot)
+void Game::load(const bool slot)
 {
 
 }
