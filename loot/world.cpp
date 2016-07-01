@@ -70,18 +70,18 @@ void World::setFast(const int8_t x, const int8_t y, const uint8_t wall)
   level[(y*width)+x] = wall;
 }
 
-uint8_t World::get(const int8_t x, const int8_t y)
+uint8_t World::get(const int8_t x, const int8_t y) const
 {
   if(inbound(x,y))
     return level[(y*width)+x];
   else
     return 1;  //outside the map is a sea of walls
 }
-uint8_t World::getFast(const int8_t x, const int8_t y)
+uint8_t World::getFast(const int8_t x, const int8_t y) const
 {
   return level[(y*width)+x];
 }
-bool World::getItem(const int8_t x, const int8_t y)
+bool World::getItem(const int8_t x, const int8_t y) const
 {
   if(inbound(x,y))
     return items[(y*width)+x];
@@ -89,7 +89,7 @@ bool World::getItem(const int8_t x, const int8_t y)
     return false;
 }
 
-bool World::inbound(const int8_t x, const int8_t y)
+bool World::inbound(const int8_t x, const int8_t y) const
 {
   return((x>=0)&&(y>=0)&&(x<width)&&(y<height));
 }
