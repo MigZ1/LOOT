@@ -33,7 +33,7 @@ class System : public Arduboy
     this->setFrameRate(30); // I checked, it's safe to do this
   }
 
-  void update()
+  void update(void)
   {
     //input
     this->prevInput = this->nowInput;
