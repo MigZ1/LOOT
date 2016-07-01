@@ -7,7 +7,7 @@
 #include "constants.h"
 #include "direction.h"
 
-Game::Game(System & ab, Render & render,Menu & menu,Player & player,World & world)
+Game::Game(System & ab, Render & render, Menu & menu, Player & player, World & world)
 {
   this->ab = &ab;
   this->menu = &menu;
@@ -15,11 +15,6 @@ Game::Game(System & ab, Render & render,Menu & menu,Player & player,World & worl
   this->player = &player;
   this->world = &world;
 }
-
-/*
-Same difference:
-Game::Game(Menu & menu) : menu(&menu) {}
-*/
 
 void Game::save(const bool slot)
 {
@@ -37,17 +32,23 @@ void Game::step(void)
     auto state = ab->getState();
     switch(state)
     {
-      case stateMenu: { menu->init(); }; break;
-      case stateGame: {
-        if (ab->getLastState()==stateMenu)
+      case stateMenu:
+      {
+        menu->init();
+        break;
+      }
+      case stateGame:
+      {
+        if (ab->getLastState() == stateMenu)
         {
           player->init();
           world->init();
-        }; break;
+          break;
+        }
       }
-      case stateBattle: {
-
-      };
+      case stateBattle:
+      {
+      }
     }
   }
   ab->stateEndChange();
@@ -58,7 +59,8 @@ void Game::step(void)
     {
       menu->step();
       menu->draw();
-    };break;
+      break;
+    }
     case stateGame:
     {
       playerStep();
@@ -67,7 +69,8 @@ void Game::step(void)
 
       if(ab->isPushed(BTN_A))
         ab->setState(stateBattle);
-    };break;
+      break;
+    }
     case stateBattle:
     {
       render->drawView();
@@ -78,9 +81,9 @@ void Game::step(void)
       ab->print(F("goes here!"));
       if(ab->isPushed(BTN_A))
         ab->setState(stateGame);
-    };break;
-
-  };
+      break;
+    }
+  }
 }
 
 void Game::playerStep(void) //Here just for testing reasons, will be relocated soon
