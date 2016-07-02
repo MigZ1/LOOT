@@ -48,12 +48,12 @@ void Menu::step(void)
         }
       }
     }
-    
+
     if(ab->isPushed(BTN_U))
     {
       --select;
     }
-    
+
     if(ab->isPushed(BTN_D))
     {
       ++select;
@@ -71,7 +71,7 @@ void Menu::draw(void)
     {
       //logo
       if (logoAnim > 0)
-        ab->drawBitmap(8, 5 - (64 - logoAnim), imgTitle, 112, 54, 1);
+        ab->drawSprite(8, 5 - (64 - logoAnim), imgTitle, 1);
       //menu text
       ab->setCursor(16, logoAnim + 8);
       ab->print(F("Play"));

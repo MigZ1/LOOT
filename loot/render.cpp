@@ -144,14 +144,17 @@ void Render::drawView(void)
         if(itemx < 64)
         {
           int8_t itemy = (top + drawSize) - (drawSize/2);
-          if(i==3)
+          //const uint8_t * image[];
+          const uint8_t * image;
+          switch(i)
           {
-            ab->drawBitmap(itemx,itemy,imgChest3,32,32,1);
-          }
-          else
-          {
-            ab->drawRect(itemx, itemy, drawSize / 2, drawSize / 2, 1);
+            case 0: image = imgChest0;  break;
+            case 1: image = imgChest1;  break;
+            case 2: image = imgChest2;  break;
+            case 3: image = imgChest3;  break;
           };
+          ab->drawSprite(itemx,itemy,image,1);
+          //ab->drawRect(itemx, itemy, drawSize / 2, drawSize / 2, 1);
         }
       }
       ++wall;
@@ -182,7 +185,7 @@ void Render::drawMap(void)
     for(int ix = 0, jx = 0; ix < 8; ++ix, jx += 8)
       if (world->get(ix, iy))
         ab->drawRect(offsetx + jx, jy, 9, 9, 1);
-  
+
   { // Explicit scoping in the hopes the compiler will ditch these 6 variables asap
     // x3 and y3 refer to the point of the arrow. Only 6 coords are needed for 3 points
     // By adding 2 to x and y up here, 10 addition operations can be eliminated
@@ -190,7 +193,7 @@ void Render::drawMap(void)
     uint8_t y1 = (player->y * 8) + 2;
     uint8_t x2 = x1, y2 = y1;
     uint8_t x3 = x1, y3 = y1;
-    
+
     switch(player->dir)
     {
       case Direction::East:
