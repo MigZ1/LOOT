@@ -1,4 +1,5 @@
 #include "system.h"
+#include "graphics.h"
 #include "render.h"
 #include "world.h"
 #include "player.h"
@@ -99,7 +100,7 @@ void Render::drawView(void)
   uint8_t wall = 0;  //current wall
 
   int drawSize, halfSize, backSize, halfBackSize, left, leftBack, top, topBack;
-  for(char i = 0; i < 4; i++) //distance
+  for(char i = 0; i < 4; ++i) //distance
   {
     drawSize = wallSize[i + 1]; halfSize = drawSize / 2;      //size of walls on screen
     backSize = wallSize[i];   halfBackSize = backSize / 2;  //size of the backside of the walls, for depth
@@ -108,7 +109,7 @@ void Render::drawView(void)
     topBack  = 32 - halfBackSize;         //y position of the walls on screen
     top      = 32 - halfSize;
 
-    for(char n = 0; n < 3; n++) //left->right
+    for(char n = 0; n < 3; ++n) //left->right
     {
       if (wallShow[wall]) //if wall exists, draw it
       {
@@ -142,8 +143,15 @@ void Render::drawView(void)
         int8_t itemx = (left + drawSize / 4);
         if(itemx < 64)
         {
-          int8_t itemy = (top + 11 * (drawSize / 12));
-          ab->drawRect(itemx, itemy, drawSize / 2, drawSize / 2, 1);
+          int8_t itemy = (top + drawSize) - (drawSize/2);
+          if(i==3)
+          {
+            ab->drawBitmap(itemx,itemy,imgChest3,32,32,1);
+          }
+          else
+          {
+            ab->drawRect(itemx, itemy, drawSize / 2, drawSize / 2, 1);
+          };
         }
       }
       ++wall;
@@ -157,13 +165,13 @@ void Render::drawView(void)
   ab->setCursor(4, 4);
   switch(player->dir)
   {
-    case Direction::East: { ab->print("EAST"); break; }
-    case Direction::South: { ab->print("SOUTH"); break; }
-    case Direction::West: { ab->print("WEST"); break; }
-    case Direction::North: {ab->print("NORTH"); break; }
-    default: { ab->print("Wat"); break; }
+    case Direction::East: { ab->print(F("EAST")); break; }
+    case Direction::South: { ab->print(F("SOUTH")); break; }
+    case Direction::West: { ab->print(F("WEST")); break; }
+    case Direction::North: {ab->print(F("NORTH")); break; }
+    default: { ab->print(F("Wat")); break; }
   }
-  printf(" Direction: %u", player->dir);
+  //printf(" Direction: %u", player->dir);
 }
 
 void Render::drawMap(void)
@@ -216,6 +224,7 @@ void Render::drawMap(void)
     }
     ab->drawLine(x1, y1, x3, y3, 1);
     ab->drawLine(x2, y2, x3, y3, 1);
+    ab->drawLine(x1, y1, x2, y2, 1);
   }
 
   //outlines the map
