@@ -15,13 +15,13 @@ class World
     uint8_t itemType[16];
     uint8_t itemAction[16];
 
-    void init();
+    void init(void);
     void load(uint8_t *ID);
-    void set(int8_t x,int8_t y,uint8_t wall);
-    void setFast(int8_t x,int8_t y,uint8_t wall);
-    bool validSize(uint8_t width,uint8_t height);
-    uint8_t get(int8_t x,int8_t y);
-    uint8_t getFast(int8_t x,int8_t y);
-    bool getItem(int8_t x,int8_t y);
-    bool inbound(int8_t x,int8_t y);
+    void set(const int8_t x, const int8_t y, const uint8_t wall);
+    void setFast(const int8_t x, const int8_t y, const uint8_t wall);
+    bool validSize(const uint8_t width, const uint8_t height);
+    uint8_t get(const int8_t x, const int8_t y) const;
+    uint8_t getFast(const int8_t x, const int8_t y) const;
+    bool getItem(const int8_t x, const int8_t y) const;
+    bool inbound(const int8_t x, const int8_t y) const;
 };

@@ -1,4 +1,4 @@
-#include "gamelogic.h"
+#include "game.h"
 #include "system.h"
 #include "render.h"
 #include "menu.h"
@@ -7,7 +7,7 @@
 #include "constants.h"
 #include "direction.h"
 
-Game::Game(System & ab,Render & render,Menu & menu,Player & player,World & world)
+Game::Game(System & ab, Render & render, Menu & menu, Player & player, World & world)
 {
   this->ab = &ab;
   this->menu = &menu;
@@ -16,38 +16,39 @@ Game::Game(System & ab,Render & render,Menu & menu,Player & player,World & world
   this->world = &world;
 }
 
-/*
-Same difference:
-Game::Game(Menu & menu) : menu(&menu) {}
-*/
-
-void Game::save(bool slot)
+void Game::save(const bool slot)
 {
 
 }
-void Game::load(bool slot)
+void Game::load(const bool slot)
 {
 
 }
 
-void Game::step()
+void Game::step(void)
 {
   if (ab->stateChanged())
   {
     auto state = ab->getState();
     switch(state)
     {
-      case stateMenu: { menu->init(); }; break;
-      case stateGame: {
-        if (ab->getLastState()==stateMenu)
+      case stateMenu:
+      {
+        menu->init();
+        break;
+      }
+      case stateGame:
+      {
+        if (ab->getLastState() == stateMenu)
         {
           player->init();
           world->init();
-        }; break;
+          break;
+        }
       }
-      case stateBattle: {
-
-      };
+      case stateBattle:
+      {
+      }
     }
   }
   ab->stateEndChange();
@@ -58,16 +59,18 @@ void Game::step()
     {
       menu->step();
       menu->draw();
-    };break;
+      break;
+    }
     case stateGame:
     {
       playerStep();
       render->step();
       render->draw();
 
-      if(ab->pushed(BTN_A))
+      if(ab->isPushed(BTN_A))
         ab->setState(stateBattle);
-    };break;
+      break;
+    }
     case stateBattle:
     {
       render->drawView();
@@ -76,31 +79,28 @@ void Game::step()
       ab->print(F("Battle"));
       ab->setCursor(66,10);
       ab->print(F("goes here!"));
-      if(ab->pushed(BTN_A))
+      if(ab->isPushed(BTN_A))
         ab->setState(stateGame);
-    };break;
-
-  };
+      break;
+    }
+  }
 }
 
-void Game::playerStep() //Here just for testing reasons, will be relocated soon
+void Game::playerStep(void) //Here just for testing reasons, will be relocated soon
 {
-  Direction dir,lastDir;
-  dir = player->dir;
-  lastDir = player->dir;
+  Direction dir = player->dir;
 
-  if(ab->pushed(BTN_L))
+  if(ab->isPushed(BTN_L))
     dir = rotateLeft(dir);
 
-  if(ab->pushed(BTN_R))
+  if(ab->isPushed(BTN_R))
     dir = rotateRight(dir);
 
-  player->moved = (dir != lastDir);
-  player->dir = dir;
+  player->changeDirection(dir);
 
-  if(ab->pushed(BTN_U)) //move 1 step in the looking direction
-    player->move(dir, 1);
+  if(ab->isPushed(BTN_U)) //move 1 step in the looking direction
+    player->move(1);
 
-  if(ab->pushed(BTN_D))
-    player->move(dir, -1);
+  if(ab->isPushed(BTN_D))
+    player->move(-1);
 }

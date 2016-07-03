@@ -1,11 +1,8 @@
-/*
-
-*/
 #include <stdint.h>
 #include <Arduboy.h>
 #include "system.h"
 #include "globals.h"
-#include "gameLogic.h"
+#include "game.h"
 #include "graphics.h"
 #include "constants.h"
 #include "render.h"
@@ -13,25 +10,25 @@
 #include "player.h"
 #include "menu.h"
 
-void setup() {
+void setup(void)
+{
 	ab.begin();
-
 	ab.fillScreen(0);
-	ab.drawBitmap(8, 5, imgTitle, 112, 54, 1);
+  	ab.drawSprite(8, 5, imgTitle, 1);
 	ab.display();
-	while(!ab.pushed(BTN_A))	//keep titlescreen up until a button is pressed
+	while(!ab.isPushed(BTN_A))	//keep titlescreen up until a button is pressed
 	{
 		ab.update();
 	}
 }
 
-void loop() {
-  if(!ab.nextFrame())
-    return;
+void loop(void)
+{
+	if(!ab.nextFrame())
+		return;
 
-  ab.update();
+	ab.update();
 	ab.clear();
-  game.step();
-
+	game.step();
 	ab.display();
 }
