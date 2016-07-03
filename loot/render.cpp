@@ -145,15 +145,21 @@ void Render::drawView(void)
         {
           int8_t itemy = (top + drawSize) - (drawSize/2);
           //const uint8_t * image[];
-          const uint8_t * image;
-          switch(i)
+          if (i==3)
           {
-            case 0: image = imgChest0;  break;
-            case 1: image = imgChest1;  break;
-            case 2: image = imgChest2;  break;
-            case 3: image = imgChest3;  break;
-          };
-          ab->drawSprite(itemx,itemy,image,1);
+            ab->drawSpriteMasked(itemx,itemy,imgChest3,imgChest3Mask);
+          }
+          else
+          {
+            const uint8_t * image;
+            switch(i)
+            {
+              case 0: image = imgChest0;  break;
+              case 1: image = imgChest1;  break;
+              case 2: image = imgChest2;  break;
+            };
+            ab->drawSprite(itemx,itemy,image,1);
+          }
           //ab->drawRect(itemx, itemy, drawSize / 2, drawSize / 2, 1);
         }
       }

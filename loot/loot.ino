@@ -14,8 +14,7 @@ void setup(void)
 {
 	ab.begin();
 	ab.fillScreen(0);
-	//ab.drawSprite(8, 5, imgTitle, 1);
-	ab.drawSprite(0,0,imgChest3,1);
+  	ab.drawSprite(8, 5, imgTitle, 1);
 	ab.display();
 	while(!ab.isPushed(BTN_A))	//keep titlescreen up until a button is pressed
 	{
